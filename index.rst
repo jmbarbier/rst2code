@@ -74,11 +74,25 @@ Le programme se compose donc de la manière suivante ::
   #@@python headers@@
   #@@license@@
   #@@imports@@
+  if __main__:
+              #@@main_function@@
   #@@command line arguments@@
   #@@rst file parser@@
   #@@blocks analysis@@
   #@@code generator@@
 
+
+
+La license du programme est la license GPLv3 ::
+
+  #@@license@@
+  # GPL v3
+
+La fonction principale ::
+
+  #@@main_function@@
+  def main():
+    return True
 
 
 Contents:

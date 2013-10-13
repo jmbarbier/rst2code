@@ -3,8 +3,8 @@ ReStructuredText parser
 
 Le travail est déjà fait par docutils
 
-.. code-block:: python
-   :name: @@/parser.py@@
+.. code:: python
+  :name: @@/parser.py@@
 
    from docutils.core import publish_doctree
    #@@imports@/parser.py@@
