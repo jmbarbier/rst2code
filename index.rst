@@ -69,14 +69,16 @@ L'invocation du code est faite par la ligne de commande suivante ::
 
 Le programme se compose donc de la manière suivante ::
 
-  #@@/main.py@@
+  #@@/rst2code.py@@
 
   #@@python headers@@
-  #@@license full@@
-  #@@main.py/imports@@
+  #@@license@@
+  #@@imports@@
   #@@command line arguments@@
   #@@rst file parser@@
+  #@@blocks analysis@@
   #@@code generator@@
+
 
 
 Contents:
