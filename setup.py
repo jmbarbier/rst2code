@@ -32,5 +32,5 @@ setup(
     author_email = "jm.barbier@solidev.net",
     url="https://github.com/jmbarbier/rst2code",
     download_url="https://github.com/jmbarbier/rst2code/archive/v"+VERSION+".tar.gz",
-    py_modules = "rst2code"
+    py_modules = ["rst2code"]
 )
