@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# rstlit documentation build configuration file, created by
+# rst2code documentation build configuration file, created by
 # sphinx-quickstart on Sat Oct 12 23:22:07 2013.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'rstlit'
+project = u'rst2code'
 copyright = u'2013, BARBIER Jean-Matthieu'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -164,7 +164,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'rstlitdoc'
+htmlhelp_basename = 'rst2codedoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -183,7 +183,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'rstlit.tex', u'rstlit Documentation',
+  ('index', 'rst2code.tex', u'rst2code Documentation',
    u'BARBIER Jean-Matthieu', 'manual'),
 ]
 
@@ -213,7 +213,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'rstlit', u'rstlit Documentation',
+    ('index', 'rst2code', u'rst2code Documentation',
      [u'BARBIER Jean-Matthieu'], 1)
 ]
 
@@ -227,8 +227,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'rstlit', u'rstlit Documentation',
-   u'BARBIER Jean-Matthieu', 'rstlit', 'One line description of project.',
+  ('index', 'rst2code', u'rst2code Documentation',
+   u'BARBIER Jean-Matthieu', 'rst2code', 'One line description of project.',
    'Miscellaneous'),
 ]
 
@@ -245,7 +245,7 @@ texinfo_documents = [
 # -- Options for Epub output ---------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'rstlit'
+epub_title = u'rst2code'
 epub_author = u'BARBIER Jean-Matthieu'
 epub_publisher = u'BARBIER Jean-Matthieu'
 epub_copyright = u'2013, BARBIER Jean-Matthieu'

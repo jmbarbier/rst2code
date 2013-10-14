@@ -1,35 +1,28 @@
-#  encoding=UTF-8
-#
-#  rst2code : reStructuredText to code literal programming
-#  Copyright (C) 2013  JM Barbier <jm.barbier@solidev.net>
-#
-#  This program is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 3 of the License, or
-#  (at your option) any later version.
-#
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+__author__ = 'jmbarbier'
+#!python
+# SEE: http://fr.slideshare.net/doughellmann/better-documentation-through-automation-creating-docutils-sphinx-extensions
 
-
-import argparse
-import sys
 from docutils.core import publish_doctree
-import logging
-logging.basicConfig(level=logging.WARNING)
 import re
-import shutil, os
+import sys
+import getopt
+import sys
+import argparse
+import logging
+import os
+import shutil
 
+logging.basicConfig(level=logging.DEBUG)
 
-MAX_ITERATIONS = 10
+# GLOBALS
 BLOCKS = {}
+DEBUG = 0
 OUTPUT_DIR = "./src"
+fileblocks = {}
+codeblocks = {}
+MAX_ITERATIONS = 10
 
+# REGULAR EXPRESSIONS
 macro = r"@@([@\w/.+! -]+)@@"
 macro_in_code = "^([ ]*).*?@@([@\w/.+! -]+)@@.*$"
 
@@ -44,13 +37,12 @@ class CodeBlock(object):
         self.iterations = 0
         self.replacement_done = False
 
-
     def macro_replace_step(self, blocks):
         logging.debug("Preparing blocks")
-        logging.debug(self.content)
+        #logging.debug(self.content)
         if self.replacement_done:
             return 0
-    
+
         def macro_replace(match):
             indent = ""
             if match.group(1) is not None:
@@ -72,15 +64,16 @@ class CodeBlock(object):
                 return out
             else:
                 # Macro not found, don't replace anything
-                logging.warning("@@%s@@ : unknown macro - not replaced" % match.group(2))
+                logging.warning("Unknown macro - not replaced")
                 return match.group(0)
-    
+
         if self.iterations > MAX_ITERATIONS:
             logging.warning("Replacemement max iterations done")
             return 0
         self.iterations += 1
         self.content, n = re.subn(macro_in_code, macro_replace,
                                   self.content, flags=re.MULTILINE)
+        logging.debug("Replaced %s " % n)
         if n==0:
             self.replacement_done = True
         return n
@@ -94,15 +87,6 @@ def store_block(block):
         BLOCKS[block.name] = []
     BLOCKS[block.name].append(block)
 
-def process_blocks():
-    logging.info("Generating code")
-    replaced = 1
-    while replaced != 0:
-        replaced = 0
-        for blocks in BLOCKS.values():
-            for block in blocks:
-                result = block.macro_replace_step(BLOCKS)
-                replaced += result
 
 def get_block(item, filename):
     """
@@ -135,6 +119,19 @@ def get_block(item, filename):
         return True
 
 
+def scan_doctree(doctree, filename=""):
+    for item in doctree.traverse():
+        if item.tagname == "literal_block":
+            get_block(item, filename)
+
+
+
+def scan_file(filename):
+    with open(filename, "r") as f:
+        lines = f.read()
+    doctree = publish_doctree(lines)
+    scan_doctree(doctree, filename)
+
 def clean_output_dir():
     for root, dirs, files in os.walk(OUTPUT_DIR):
         for f in files:
@@ -163,23 +160,21 @@ def write_files():
     print("")
 
 
-def scan_doctree(doctree, filename=""):
-    for item in doctree.traverse():
-        if item.tagname == "literal_block":
-            get_block(item, filename)
-
-
-
-def scan_file(filename):
-    with open(filename, "r") as f:
-        lines = f.read()
-    doctree = publish_doctree(lines)
-    scan_doctree(doctree, filename)
+def process_blocks():
+    logging.info("Generating code")
+    replaced = 1
+    while replaced != 0:
+        replaced = 0
+        for blocks in BLOCKS.values():
+            for block in blocks:
+                result = block.macro_replace_step(BLOCKS)
+                replaced += result
 
 
 class Usage(Exception):
     def __init__(self, msg):
         self.msg = msg
+
 
 def main(argv=None):
     if argv is None:
@@ -215,21 +210,22 @@ def main(argv=None):
         print ("for help use --help", file=sys.stderr)
         return 2
 
-if __name__ == "__main__":
-    sys.exit(main())
-
-
 def sphinx_get_doctree(app, doctree, docname):
     logging.debug("Got doctree")
     scan_doctree(doctree,docname)
+
 def sphinx_build_finished(app, exception):
     env = app.builder.env
     OUTPUT_DIR = app.config.rst2code_output_dir
     process_blocks()
     clean_output_dir()
     write_files()
+
 def setup(app):
     app.add_config_value("rst2code_output_dir", "./src", "env")
     app.add_config_value("rst2code_max_iterations", 10, "env")
     app.connect('doctree-resolved',sphinx_get_doctree)
     app.connect('build-finished', sphinx_build_finished)
+
+if __name__ == "__main__":
+    sys.exit(main())

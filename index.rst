@@ -1,50 +1,68 @@
-.. rstlit documentation master file, created by
-   sphinx-quickstart on Sat Oct 12 23:22:07 2013.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Welcome to rst2code's documentation!
+====================================
 
-Welcome to rstlit's documentation!
-==================================
 
-**rstlit** est un outil de programmation littérale que je vais essayer
-de créer pour répondre à un besoin que j'ai depuis des années et que
-je n'ai pas pu combler en utilisant les outils existants.
+**rst2code** is a literate programming tool.
 
-Le principe
------------
+The goal
+--------
 
-Le principe est d'écrire le code en même temps que la documentation,
-et plus précisément de pouvoir générer le code à partir de la
-documentation. Contrairement aux outils permettant de générer la
-documentation à partir du code (docco, doxygen), ici l'idée est de
-générer le code à partir de la documentation.
+The goal is to be able to write code at the same time that documentation. More precisely, **rst2code** allows to
+generate code from documentation, whereas many tools - pycco, docco, doxygen, sphinx, are designed to extract
+documentation from code.
 
-L'ordre de lecture et de compréhension d'un humain n'étant pas
-forcément celui d'un ordinateur, la documentation doit pouvoir
-présenter les morceaux de codes dans un ordre différent de celui du
-code pour l'ordinateur.
+As human reading and understanding order is not the same than computer's, **rst2code** allows us to write code
+in any order, reassembling code blocks at "compile" time to obtain real source code suitable for computer use.
 
-La documentation doit pouvoir être utilisable directement, sans avoir
-à être transformée. Le code, en revanche, est généré par lecture de la
-documentation.
+**rst2code** is code agnostic (normally.. i tried it with python, html and coffee-script for now)
 
-L'outil doit être multi-languages.
+For the sake of readability, code blocks included in documentation should be easily syntax highligted (this means that
+a code block should be more or less valid code)
 
-Les morceaux de code générés doivent pouvoir être valide avec un
-"surligneur de syntaxe" directement.
 
-Proposition de syntaxe
+Syntax
+------
+
+
+Code blocks are written in ... well, reStructuredText code blocks directives ( code / code-block / sourcecode / :: )
+
+Each code block is named, using code block name options (if available), or within a comment in the first line of
+code block. Names are in @@MACRONAME@@ form (characters surrounded by two @) :
+
+
 
 .. code-block:: rest
 
   .. code-block:: langage
 
-     #MACRONAME definition
-     Code with #@@MACRONAME2@@ in comments
+     #@@MACRONAME@@ (within language comment)
+     Code
 
-If the first line of source code is a comment (language dependant)
-containing the special (unescaped) syntax @@MACRONAME@@, the code
-block have to be considered by the program generator.
+or
+
+.. code-block:: rest
+
+  .. code:: language
+    :name: @@MACRONAME@@
+
+    Code
+
+or
+
+.. code-block:: rest
+
+  ::
+
+    @@MACRONAME@@ (within language comment)
+
+
+If **name** option is available, it is used to get block comment name.
+
+If not, or if no block name is found in **name** option, the first line of source code should
+contain the name inside a comment (language dependant), using the format @@MACRONAME@@.
+
+If no block name is found, the block is not used in **rst2code**
+
 
 MACRONAMES definitions are :
 
@@ -58,41 +76,22 @@ MACRONAMES definitions are :
   moment.
 
 
-Inside the program lines, we detect comments containing @@MACRONAMES@@
+Inside the code blocks, **rst2code** detect comments containing @@MACRONAMES@@
 strings, remove the comment while retaining indentation for every line
-in macro content and then replace it. Circular references have to be
-detected.
+in macro content and then replace it.
 
-L'invocation du code est faite par la ligne de commande suivante ::
+Usage
+-----
+
+With "standard" reStructuredText ::
 
   $ rst2code [OPTIONS] DEST_DIR RST_FILE1 RST_FILE2 RST_FILE3 ...
 
-Le programme se compose donc de la manière suivante ::
 
-  #@@/rst2code.py@@
+With "sphinx-flavoured" .rst files : just add "rst2code" to sphinx extensions, and
+set rst2code_output_dir config option and launch any sphinx document generation.
 
-  #@@python headers@@
-  #@@license@@
-  #@@imports@@
-  if __main__:
-              #@@main_function@@
-  #@@command line arguments@@
-  #@@rst file parser@@
-  #@@blocks analysis@@
-  #@@code generator@@
-
-
-
-La license du programme est la license GPLv3 ::
-
-  #@@license@@
-  # GPL v3
-
-La fonction principale ::
-
-  #@@main_function@@
-  def main():
-    return True
+**Current rst2code module have been written from this documentation**
 
 
 Contents:
@@ -100,7 +99,10 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-
+   source/index
+   source/cmdline
+   source/sphinx
+   source/misc
 
 Indices and tables
 ==================
