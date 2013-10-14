@@ -1,5 +1,5 @@
-#  encoding=UTF-8
-#
+# encoding=UTF-8
+
 #  rst2code : reStructuredText to code literal programming
 #  Copyright (C) 2013  JM Barbier <jm.barbier@solidev.net>
 #

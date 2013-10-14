@@ -3,7 +3,7 @@ Miscelleanous data
 
 We need to include a license ::
 
-    @@license@@
+    #@@license@@
     #  rst2code : reStructuredText to code literal programming
     #  Copyright (C) 2013  JM Barbier <jm.barbier@solidev.net>
     #
@@ -23,6 +23,6 @@ We need to include a license ::
 
 And a python header for UTF-8 encoding ::
 
-    @@python_header@@
+    #@@python_headers@@
     # encoding=UTF-8
     
