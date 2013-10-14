@@ -1,16 +1,17 @@
 import os
 from distutils.core import setup
 from setuptools import find_packages
+from version import VERSION
 
-VERSION = "0.0.1"
+VERSION = VERSION
 
 CLASSIFIERS = [
-    'Development Status :: 2 - Pre-Alpha',
+    'Development Status :: 3 - Alpha',
     'Environment :: Console',
     'Intended Audience :: Developers',
     'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
     'Operating System :: OS Independent',
-    'Programming Language :: Python',
+    'Programming Language :: Python :: 3',
     'Topic :: Documentation',
     'Topic :: Software Development',
     'Topic :: Text Processing :: Markup'
