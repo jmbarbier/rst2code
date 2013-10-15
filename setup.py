@@ -1,12 +1,11 @@
 import os
 from distutils.core import setup
 from setuptools import find_packages
-from version import VERSION
 
-VERSION = VERSION
+VERSION = "0.0.1-beta"
 
 CLASSIFIERS = [
-    'Development Status :: 3 - Alpha',
+    'Development Status :: 2 - Beta',
     'Environment :: Console',
     'Intended Audience :: Developers',
     'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
