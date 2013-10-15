@@ -54,9 +54,8 @@ of input files ::
     
         except Usage as err:
             print(sys.argv[0].split('/')[-1].split('\\')[-1] + ': ' \
-                  + str(err.msg) \
-                  , file=sys.stderr)
-            print ("for help use --help", file=sys.stderr)
+                  + str(err.msg))
+            print ("for help use --help")
             return 2
     
     if __name__ == "__main__":

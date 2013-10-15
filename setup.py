@@ -10,7 +10,7 @@ CLASSIFIERS = [
     'Intended Audience :: Developers',
     'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
     'Operating System :: OS Independent',
-    'Programming Language :: Python :: 3',
+    'Programming Language :: Python',
     'Topic :: Documentation',
     'Topic :: Software Development',
     'Topic :: Text Processing :: Markup'

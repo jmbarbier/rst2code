@@ -250,7 +250,7 @@ All blocks are scanned, file block contents are concatened then written to file 
                         files[block.name] = []
                     files[block.name].append(block.content)
     
-        print("RST2CODE: Writing files : ",end="")
+        print("RST2CODE: Writing files : ")
         for filename in files:
             destfile = os.path.abspath(os.path.join(OUTPUT_DIR + filename))
             d = os.path.dirname(destfile)
@@ -258,6 +258,6 @@ All blocks are scanned, file block contents are concatened then written to file 
                 os.makedirs(d)
             with open(destfile, "w") as f:
                 f.write("\n".join(files[filename]))
-                print(".", end="")
+                print(filename)
         print("")
 

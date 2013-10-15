@@ -151,7 +151,7 @@ def write_files():
                     files[block.name] = []
                 files[block.name].append(block.content)
 
-    print("RST2CODE: Writing files : ",end="")
+    print("RST2CODE: Writing files : ")
     for filename in files:
         destfile = os.path.abspath(os.path.join(OUTPUT_DIR + filename))
         d = os.path.dirname(destfile)
@@ -159,7 +159,7 @@ def write_files():
             os.makedirs(d)
         with open(destfile, "w") as f:
             f.write("\n".join(files[filename]))
-            print(".", end="")
+            print(filename)
     print("")
 
 
@@ -216,9 +216,8 @@ def main(argv=None):
 
     except Usage as err:
         print(sys.argv[0].split('/')[-1].split('\\')[-1] + ': ' \
-              + str(err.msg) \
-              , file=sys.stderr)
-        print ("for help use --help", file=sys.stderr)
+              + str(err.msg))
+        print ("for help use --help")
         return 2
 
 if __name__ == "__main__":
