@@ -36,7 +36,6 @@ Logging can be enabled for debug / trace purposes ::
 
     #@@imports@@
     import logging
-    logging.basicConfig(level=logging.WARNING)  
 
 Code blocks
 -----------

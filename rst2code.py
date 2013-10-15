@@ -21,7 +21,6 @@ import argparse
 import sys
 from docutils.core import publish_doctree
 import logging
-logging.basicConfig(level=logging.WARNING)
 import re
 import shutil, os
 
@@ -182,6 +181,7 @@ class Usage(Exception):
         self.msg = msg
 
 def main(argv=None):
+    global OUTPUT_DIR
     if argv is None:
         argv = sys.argv[1:]
     try:
@@ -189,23 +189,28 @@ def main(argv=None):
             parser = argparse.ArgumentParser("Write code from rst files")
             parser.add_argument('outdir', metavar="OUTPUT_DIR", type=str, nargs=1,
                                 help="Output directory base for code")
-            parser.add_argument('srcfiles', metavar="SRC_FILES", type=str, nargs="+",
+            parser.add_argument('srcfiles', metavar="SRC_FILES", type=str, nargs=argparse.REMAINDER,
                                 help="Source files (.rst files)")
-            parser.add_argument('--debug', '-d')
+            parser.add_argument('--debug', '-d', action='store_true')
             args = parser.parse_args(argv)
-
         except Exception as msg:
              raise Usage(msg)
 
 
         # process arguments
         DEBUG = args.debug
-        OUTPUT_DIR = args.outdir
+        if DEBUG:
+            logging.basicConfig(level=logging.DEBUG)
+        else:
+            logging.basicConfig(level=logging.WARNING)
+        OUTPUT_DIR = args.outdir[0]
         SRC_FILES = args.srcfiles
 
         for filename in SRC_FILES:
             scan_file(filename)
         process_blocks()
+        clean_output_dir()
+        write_files()
         return 0
 
     except Usage as err:
@@ -220,9 +225,16 @@ if __name__ == "__main__":
 
 
 def sphinx_get_doctree(app, doctree, docname):
+
+    if app.config.rst2code_debug:
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.WARNING)
+
     logging.debug("Got doctree")
     scan_doctree(doctree,docname)
 def sphinx_build_finished(app, exception):
+    global OUTPUT_DIR
     env = app.builder.env
     OUTPUT_DIR = app.config.rst2code_output_dir
     process_blocks()
@@ -231,5 +243,6 @@ def sphinx_build_finished(app, exception):
 def setup(app):
     app.add_config_value("rst2code_output_dir", "./src", "env")
     app.add_config_value("rst2code_max_iterations", 10, "env")
+    app.add_config_value("rst2code_debug", False, "env")
     app.connect('doctree-resolved',sphinx_get_doctree)
     app.connect('build-finished', sphinx_build_finished)
