@@ -17,9 +17,8 @@ import sys, os
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath('.'))
-from setup import VERSION
-# -- General configuration -----------------------------------------------------
-
+with open('version.py') as f: exec(f.read())
+VERSION = __version__
 # If your documentation needs a minimal Sphinx version, state it here.
 #needs_sphinx = '1.0'
 

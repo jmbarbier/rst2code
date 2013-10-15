@@ -24,5 +24,6 @@ We need to include a license ::
 And a python header for UTF-8 encoding ::
 
     #@@python_headers@@
+    #!/usr/bin/python
     # encoding=UTF-8
     

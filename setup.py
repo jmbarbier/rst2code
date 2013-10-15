@@ -2,10 +2,10 @@ import os
 from distutils.core import setup
 from setuptools import find_packages
 
-VERSION = "0.0.1-beta"
+with open('version.py') as f: exec(f.read())
 
 CLASSIFIERS = [
-    'Development Status :: 2 - Beta',
+    'Development Status :: 5 - Production/Stable',
     'Environment :: Console',
     'Intended Audience :: Developers',
     'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
@@ -27,10 +27,11 @@ setup(
     description = "reStructuredText literate programming tool",
     classifiers = CLASSIFIERS,
     install_requires = INSTALL_REQUIRES,
-    version = VERSION,
+    version = __version__,
     author = "Jean-Matthieu BARBIER",
     author_email = "jm.barbier@solidev.net",
     url="https://github.com/jmbarbier/rst2code",
-    download_url="https://github.com/jmbarbier/rst2code/archive/v"+VERSION+".tar.gz",
-    py_modules = ["rst2code"]
+    download_url="https://github.com/jmbarbier/rst2code/archive/v"+__version__+".tar.gz",
+    py_modules = ["rst2code", "version"],
+    scripts = ["rst2code.py"]
 )
